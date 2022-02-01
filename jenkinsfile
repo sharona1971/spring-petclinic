@@ -1,10 +1,8 @@
 pipeline {
-    agent {
-        any {
-            image 'maven:3.8.1-adoptopenjdk-11' 
-            args '-v /root/.m2:/root/.m2' 
-        }
-    }
+    agent any {
+		image 'maven:3.8.1-adoptopenjdk-11' 
+        args '-v /root/.m2:/root/.m2'  
+
     environment {
         DATE = new Date().format('yy.M')
         TAG = "${DATE}.${BUILD_NUMBER}"
@@ -17,27 +15,7 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                script {
-                    docker.build("petclinic/hello-world:${TAG}")
-                }
+                    docker build --tag ${TAG}
             }
-        }
-	    stage('Pushing Docker Image to Dockerhub') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker_credential') {
-                        docker.image("petclinic/hello-world:${TAG}").push()
-                        docker.image("petclinic/hello-world:${TAG}").push("latest")
-                    }
-                }
-            }
-        }
-        stage('Deploy'){
-            steps {
-                sh "docker stop hello-world | true"
-                sh "docker rm hello-world | true"
-                sh "docker run --name hello-world -d -p 9004:8080 petclinic/hello-world:${TAG}"
-            }
-        }
     }
 }
