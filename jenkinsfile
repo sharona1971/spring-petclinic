@@ -3,21 +3,17 @@
 
 name: Java CI with Maven
 
-# Reached On loop 
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-# Reached Jobs loop 
 
 jobs:
   build:
 
     runs-on: windows-latest
-
-# Reached Steps loop 
 
     steps:
       - uses: actions/checkout@v2
@@ -28,4 +24,4 @@ jobs:
 			java-version: '17'
 		    cache: maven
       - name: Build with Maven Wrapper
-        run: ./mvnw -B package
+        run: ./mvn -B package
