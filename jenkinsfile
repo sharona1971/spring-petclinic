@@ -15,7 +15,8 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                    docker build --tag ${TAG}
+                    docker build --tag $BUILD_NUMBER/$TAG
             }
+		}
     }
 }
