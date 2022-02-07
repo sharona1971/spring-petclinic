@@ -27,8 +27,7 @@ pipeline {
 	stage('Docker Deploy'){
 		steps {
 			sh "docker stop spring-petclinic:2.6.0-SNAPSHOT | true"
-			sh "docker rm spring-petclinic:2.6.0-SNAPSHOT | true"
-			sh "docker run -it spring-petclinic:2.6.0-SNAPSHOT -d -p 9090:8080 
+			sh "docker rm spring-petclinic:2.6.0-SNAPSHOT | true"			
 		}
 	}
 }
