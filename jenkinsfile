@@ -16,18 +16,4 @@ pipeline {
             }
         }
     }
-	stage('Docker Build') {
-				steps {
-					script {
-						sh "docker build --target build -t ${imageId} ."
-					}
-				}
-			}
-	stage('Docker Deploy'){
-		steps {
-			sh "docker stop petclinic | true"
-			sh "docker rm petclinic | true"
-			sh "docker run --name petclinic -d -p 8080:9090 
-		}
-	}
 }
