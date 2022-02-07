@@ -27,7 +27,7 @@ pipeline {
 				script {
 					sh "docker stop spring-petclinic:2.6.0-SNAPSHOT | true"
 					sh "docker rm spring-petclinic:2.6.0-SNAPSHOT | true"
-					sh "docker run --name petclinic -d -p -rm -p 9090:8080 spring-petclinic:2.6.0-SNAPSHOT
+					sh "docker run --name petclinic -d -p 9090:8080 spring-petclinic:2.6.0-SNAPSHOT"
 				}
 			}
 		}
