@@ -15,7 +15,6 @@ pipeline {
                 sh 'mvn -B clean package' 
             }
         }
-    }
 		stage('Docker Build') {
 					steps {
 						script {
@@ -23,11 +22,13 @@ pipeline {
 						}
 					}
 				}
-		}
-	stage('Docker Deploy'){
-		steps {
-			sh "docker stop spring-petclinic:2.6.0-SNAPSHOT | true"
-			sh "docker rm spring-petclinic:2.6.0-SNAPSHOT | true"			
+		stage('Docker Deploy'){
+			steps {
+				script {
+					sh "docker stop spring-petclinic:2.6.0-SNAPSHOT | true"
+					sh "docker rm spring-petclinic:2.6.0-SNAPSHOT | true"			
+				}
+			}
 		}
 	}
 }
