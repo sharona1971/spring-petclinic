@@ -1,3 +1,7 @@
+#!/usr/bin/env groovy
+
+def imageId = "use-name/image-name:1.$BUILD_NUMBER"
+
 pipeline {
     agent {
         any {
@@ -5,11 +9,25 @@ pipeline {
             args '-v /root/.m2:/root/.m2' 
         }
     }
-    stages {
+	stages {
         stage('Build') { 
             steps {
                 sh 'mvn -B clean package' 
             }
         }
     }
+	stage('Docker Build') {
+				steps {
+					script {
+						sh "docker build --target build -t ${imageId} ."
+					}
+				}
+			}
+	stage('Docker Deploy'){
+		steps {
+			sh "docker stop petclinic | true"
+			sh "docker rm petclinic | true"
+			sh "docker run --name petclinic -d -p 8080:9090 
+		}
+	}
 }
